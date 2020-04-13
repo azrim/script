@@ -29,7 +29,7 @@ then
 	if [ $? -eq 0 ]
 	then
 		echo "build DONEEE"
-		sendMessage "build DONE!"
+		sendMessage "build DONE @azrim89!"
 
 		BUILD_FINISHED=true
 		if [ $BUILD_FINISHED = true  ] ; then
@@ -41,8 +41,8 @@ then
 			echo $OUTPUT_LOC
 
 			#upload to gdrive
-			sendMessage "Uploading to Gdrive..."
-			gdrive upload $OUTPUT_LOC | tee upload.log
+			sendMessage "Uploading to Mega.nz.."
+			megaput $OUTPUT_LOC -u mirzaspc@gmail.com -p mirza0809 | tee upload.log
 
 			#get file id
 			sed -e 's/.*Uploaded\(.*\)at.*/\1/' upload.log >> id.txt
@@ -51,12 +51,12 @@ then
 			FILE_ID=$(cat final.txt)
 
 			#set permission to sharing
-			gdrive share $FILE_ID
+			#gdrive share $FILE_ID
 
 			#finally output the sharing url
-			URL='https://drive.google.com/open?id='$FILE_ID
-			SHARE="$(echo -e "${URL}" | tr -d '[:space:]')"
-			echo $SHARE >> url.txt
+			#URL='https://drive.google.com/open?id='$FILE_ID
+			#SHARE="$(echo -e "${URL}" | tr -d '[:space:]')"
+			#echo $SHARE >> url.txt
 
 			#MESSAGE=$(cat url.txt)
 			echo $SHARE
@@ -85,7 +85,7 @@ MD5=`md5sum ${OUTPUT_LOC} | awk '{ print $1 }'`
 read -r -d '' SUMMARY << EOM
 ROM: $ZIPNAAM
 Build: $BUILD_TAIP
-LINK: $SHARE
+#LINK: $SHARE
 NOTES: $NOTES
 MD5: $MD5
 EOM
