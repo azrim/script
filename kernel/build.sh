@@ -56,6 +56,7 @@ regenerate() {
 # Building
 makekernel() {
     export PATH="${COMP_PATH}"
+    rm -rf "${KERNEL_DIR}"/out/arch/arm64/boot
     mkdir -p out
     make O=out ARCH=arm64 ${DEFCONFIG}
     if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
