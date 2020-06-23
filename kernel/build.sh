@@ -10,14 +10,14 @@ KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/qcom/trinket.dtb
 ANYKERNEL="${HOME}"/anykernel
 
 # Compiler
-COMP_TYPE=clang
+COMP_TYPE="clang" # unset if want to use gcc as compiler
 COMP_PATH="$HOME/proton-clang/bin:${PATH}"
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
 # Defconfig
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
-REGENERATE_DEFCONFIG="true"
+REGENERATE_DEFCONFIG="true" # unset if don't want to regenerate defconfig
 
 # Costumize
 KERNEL="SiLonT"
@@ -28,8 +28,8 @@ TEMPZIPNAME="${KERNELNAME}-unsigned.zip"
 ZIPNAME="${KERNELNAME}.zip"
 
 # Telegram
-CHATID=""
-TELEGRAM_TOKEN=""
+CHATID="" # Group/channel chatid (use rose/userbot to get it)
+TELEGRAM_TOKEN="" # Get from botfather
 
 # Export Telegram.sh
 TELEGRAM_FOLDER=${HOME}/telegram
@@ -58,10 +58,10 @@ makekernel() {
     export PATH="${COMP_PATH}"
     mkdir -p out
     make O=out ARCH=arm64 ${DEFCONFIG}
-    if [[ "${REGENERATE_DEFCONFIG}" =~ "true"* ]]; then
+    if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
         regenerate
     fi
-    if [[ "${COMP_TYPE}" =~ "clang"* ]]; then
+    if [[ "${COMP_TYPE}" =~ "clang" ]]; then
         make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64
     else
 	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
@@ -111,4 +111,4 @@ makekernel
 packingkernel
 END=$(date +"%s")
 DIFF=$(( END - START ))
-tg_cast "Build for ${DEVICE} with ${COMPILER_STRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrimkang"
+tg_cast "Build for ${DEVICE} with ${COMPILER_STRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrim89"
