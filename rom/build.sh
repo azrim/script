@@ -13,7 +13,7 @@ BUILD_START=$(date +"%s")
 FOLDER=$PWD
 OUT=$FOLDER/out/target/product/ginkgo
 
-export BUILD_TYPE=UwU-1
+export BUILD_TYPE=OFFICIAL
 TYPE=$BUILD_TYPE
 
 
@@ -22,7 +22,6 @@ CHAT_ID="-1001254060097"
 
 
 # Color Code Script
-black='\e[0;30m'        # Black
 red='\e[0;31m'          # Red
 green='\e[0;32m'        # Green
 yellow='\e[0;33m'       # Yellow
@@ -37,26 +36,25 @@ nocol='\033[0m'         # Default
 #COMPILATION SCRIPTS
 
 
-echo -e "${green}"
+echo -e "${blue}"
 echo "--------------------------------------------------------"
 echo "      Cleaning environment     "
 echo "--------------------------------------------------------"
 
-cd $FOLDER
-rm *.txt
-rm *.url
-rm $OUT/*.zip
-rm $OUT/*.zip.md5sum
+cd "$FOLDER"
+rm ./*.txt
+rm "$OUT"/*.zip
+rm "$OUT"/*.zip.md5sum
 
 
-echo -e "$cyan***********************************************"  
+echo -e "$yellow***********************************************"  
 echo "         Setting up Environment     "
 echo -e "***********************************************$nocol"
 
 . build/envsetup.sh
 lunch $ROM_DEVICE-$TARGET
 
-echo -e "$cyan***********************************************"
+echo -e "$purple***********************************************"
 echo "          Building the Bitch       "
 echo -e "***********************************************$nocol"
 
@@ -73,7 +71,7 @@ brunch ginkgo 2>&1 | tee log.txt
 #mka api-stubs-docs -j24 && mka hiddenapi-lists-docs -j24 && mka system-api-stubs-docs -j24 && mka test-api-stubs-docs -j24
 #mka bacon -j$(nproc --all) |  tee log.txt
 
-if ! [ -f $OUT/*$TYPE*.zip ]; then
+if ! [ -f "$OUT"/*$TYPE*.zip ]; then
     echo -e "Build compilation failed, I will shutdown instance if @azrim89 not stop me"
     curl -F chat_id=$CHAT_ID -F document=@"$FOLDER/log.txt" -F caption="Build Failed, check log" https://api.telegram.org/bot${TOKEN}/sendDocument
     sleep 30m
@@ -82,20 +80,20 @@ fi
 
 # If compilation was successful
 
-echo -e "$green***********************************************"
+echo -e "$cyan***********************************************"
 echo "          UPLOADING    "
 echo -e "***********************************************$nocol"
 
-gd upload $OUT/*$TYPE*.zip | tee -a gd-up.txt
+gd upload "$OUT"/*$TYPE*.zip | tee -a gd-up.txt
 
 
-echo -e "$green***********************************************"
+echo -e "$white***********************************************"
 echo "          Fetching info    "
 echo -e "***********************************************$nocol"
 
 FILEID=$(cat gd-up.txt | tail -n 1 | awk '{ print $2 }')
-gd share $FILEID
-gd info $FILEID | tee -a gd-info.txt
+gd share "$FILEID"
+gd info "$FILEID" | tee -a gd-info.txt
 MD5SUM=$(cat gd-info.txt | grep 'Md5sum' | awk '{ print $2 }')
 NAME=$(cat gd-info.txt | grep 'Name' | awk '{ print $2 }')
 SIZE=$(cat gd-info.txt | grep 'Size' | awk '{ print $2 }')
