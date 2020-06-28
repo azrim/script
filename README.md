@@ -1,0 +1,2 @@
+# script
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/63e4d410b95743428ac538a9850821dd)](https://app.codacy.com/manual/azrim/script?utm_source=github.com&utm_medium=referral&utm_content=azrim/script&utm_campaign=Badge_Grade_Dashboard)
