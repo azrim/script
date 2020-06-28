@@ -25,7 +25,6 @@ CHAT_ID="-1001254060097"
 red='\e[0;31m'          # Red
 green='\e[0;32m'        # Green
 yellow='\e[0;33m'       # Yellow
-blue='\e[0;34m'         # Blue
 purple='\e[0;35m'       # Purple
 cyan='\e[0;36m'         # Cyan
 white='\e[0;37m'        # White
@@ -36,7 +35,7 @@ nocol='\033[0m'         # Default
 #COMPILATION SCRIPTS
 
 
-echo -e "${blue}"
+echo -e "${red}"
 echo "--------------------------------------------------------"
 echo "      Cleaning environment     "
 echo "--------------------------------------------------------"

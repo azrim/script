@@ -41,9 +41,11 @@ TELEGRAM_TOKEN="" # Get from botfather
 # Export Telegram.sh
 TELEGRAM_FOLDER=${HOME}/telegram
 if ! [ -d "${TELEGRAM_FOLDER}" ]; then
-    git clone https://github.com/fabianonline/telegram.sh/ ${TELEGRAM_FOLDER}
+    git clone https://github.com/fabianonline/telegram.sh/ "${TELEGRAM_FOLDER}"
 fi
-TELEGRAM=${TELEGRAM_FOLDER}/telegram
+
+TELEGRAM="${TELEGRAM_FOLDER}"/telegram
+
 tg_cast() {
     "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
     "$(
