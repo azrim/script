@@ -11,7 +11,14 @@ ANYKERNEL="${HOME}"/anykernel
 
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
-COMP_PATH="$HOME/proton-clang/bin:${PATH}"
+
+CLANG_REPO="https://github.com/kdrag0n/proton-clang"
+CLANG_DIR="$HOME/proton-clang"
+if ! [ -d "${CLANG_DIR}" ]; then
+    git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
+fi
+COMP_PATH="$CLANG_DIR/bin:${PATH}"
+
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
@@ -91,11 +98,11 @@ packingkernel() {
 
     # Zip the kernel, or fail
     cd "${ANYKERNEL}" || exit
-    zip -r9 "${TEMPZIPNAME}" *
+    zip -r9 "${TEMPZIPNAME}" ./*
 
     # Sign the zip before sending it to Telegram
     curl -sLo zipsigner-3.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel2/master/zipsigner-3.0.jar
-    java -jar zipsigner-3.0.jar ${TEMPZIPNAME} ${ZIPNAME}
+    java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     # Ship it to the CI channel
     "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
