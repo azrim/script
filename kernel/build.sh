@@ -98,12 +98,12 @@ packingkernel() {
     fi
     git clone "$ANYKERNEL_REPO" -b "$ANYKERNEL_BRANCH" "${ANYKERNEL}"
     if [[ "${DTB_TYPE}" =~ "single" ]]; then
-    cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz-dtb
+        cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz-dtb
     else
-    mkdir "${ANYKERNEL}"/kernel/
-    cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz
-    mkdir "${ANYKERNEL}"/dtbs/
-    cp "${KERN_DTB}" "${ANYKERNEL}"/dtbs/trinket.dtb
+        mkdir "${ANYKERNEL}"/kernel/
+        cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz
+        mkdir "${ANYKERNEL}"/dtbs/
+        cp "${KERN_DTB}" "${ANYKERNEL}"/dtbs/trinket.dtb
     fi
 
     # Zip the kernel, or fail
