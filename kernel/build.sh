@@ -5,14 +5,18 @@
 
 # Init
 KERNEL_DIR="${PWD}"
-KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz
-KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/qcom/trinket.dtb
+DTB_TYPE="" # define as "single" if want use single file
+KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz             # if use single file define as Image.gz-dtb instead
+KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/qcom/trinket.dtb # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
+
+# Repo URL
+CLANG_REPO="https://github.com/kdrag0n/proton-clang"
+ANYKERNEL_REPO="https://github.com/azrim/kerneltemplate.git"
+ANYKERNEL_BRANCH="dtb"
 
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
-
-CLANG_REPO="https://github.com/kdrag0n/proton-clang"
 CLANG_DIR="$HOME/proton-clang"
 if ! [ -d "${CLANG_DIR}" ]; then
     git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
@@ -39,7 +43,7 @@ CHATID="" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN="" # Get from botfather
 
 # Export Telegram.sh
-TELEGRAM_FOLDER=${HOME}/telegram
+TELEGRAM_FOLDER="${HOME}"/telegram
 if ! [ -d "${TELEGRAM_FOLDER}" ]; then
     git clone https://github.com/fabianonline/telegram.sh/ "${TELEGRAM_FOLDER}"
 fi
@@ -57,8 +61,8 @@ tg_cast() {
 
 # Regenerating Defconfig
 regenerate() {
-    cp out/.config arch/arm64/configs/vendor/ginkgo-perf_defconfig
-    git add arch/arm64/configs/vendor/ginkgo-perf_defconfig
+    cp out/.config arch/arm64/configs/"${DEFCONFIG}"
+    git add arch/arm64/configs/"${DEFCONFIG}"
     git commit -m "defconfig: Regenerate"
 }
 
@@ -92,11 +96,15 @@ packingkernel() {
     if [ -d "${ANYKERNEL}" ]; then
         rm -rf "${ANYKERNEL}"
     fi
-    git clone https://github.com/azrim/kerneltemplate.git -b dtb "${ANYKERNEL}"
+    git clone "$ANYKERNEL_REPO" -b "$ANYKERNEL_BRANCH" "${ANYKERNEL}"
+    if [[ "${DTB_TYPE}" =~ "single" ]]; then
+    cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz-dtb
+    else
     mkdir "${ANYKERNEL}"/kernel/
     cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz
     mkdir "${ANYKERNEL}"/dtbs/
     cp "${KERN_DTB}" "${ANYKERNEL}"/dtbs/trinket.dtb
+    fi
 
     # Zip the kernel, or fail
     cd "${ANYKERNEL}" || exit
