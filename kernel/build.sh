@@ -21,10 +21,14 @@ CLANG_DIR="$HOME/proton-clang"
 if ! [ -d "${CLANG_DIR}" ]; then
     git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
 fi
-COMP_PATH="$CLANG_DIR/bin:${PATH}"
-
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
+
+if [[ "${COMP_TYPE}" =~ "clang" ]]; then
+    COMP_PATH="$CLANG_DIR/bin:${PATH}"
+else
+    COMP_PATH="${GCC_DIR}/bin:${GCC32_DIR}/bin:${PATH}"
+fi
 
 # Defconfig
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
@@ -69,7 +73,7 @@ regenerate() {
 # Building
 makekernel() {
     export PATH="${COMP_PATH}"
-    rm -rf "${KERNEL_DIR}"/out/arch/arm64/boot
+    rm -rf "${KERNEL_DIR}"/out/arch/arm64/boot # clean previous compilation
     mkdir -p out
     make O=out ARCH=arm64 ${DEFCONFIG}
     if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
