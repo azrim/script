@@ -46,7 +46,7 @@ build() {
     export "${VERSIONING}"="${VERSION}"
     source build/envsetup.sh
     lunch "${ROM}"_"${DEVICE}"-"${TARGET}"
-    brunch ginkgo 2>&1 | tee log.txt
+    brunch "${DEVICE}" 2>&1 | tee log.txt
 }
 
 # Checker
