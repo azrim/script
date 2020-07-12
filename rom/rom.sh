@@ -90,7 +90,7 @@ gdrive() {
     NAME=$(cat gd-info.txt | grep 'Name' | awk '{ print $2 }')
     SIZE=$(cat gd-info.txt | grep 'Size' | awk '{ print $2 }')
     DLURL=$(cat gd-info.txt | grep 'DownloadUrl' | awk '{ print $2 }')
-    LINKBUTTON="[Google Drive]($DLURL)"
+    LINKBUTTON="[Download](buttonurl://${DLURL})"
     success
 }
 
@@ -102,10 +102,10 @@ success() {
             "Build took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
             "----------------------------------------" \
             "ROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION} "\
-	          "Filename: ${NAME}" \
-	          "Size: <code>${SIZE}</code>" \
-	          "MD5: <code>${MD5SUM}</code>" \
-            "Download Link: ${LINKBUTTON}
+	    "Filename: ${NAME}" \
+	    "Size: <code>${SIZE}</code>" \
+	    "MD5: <code>${MD5SUM}</code>" \
+            "${LINKBUTTON}"
     "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
     self_destruct
 }
