@@ -7,7 +7,7 @@ FOLDER="${PWD}"
 OUT="${FOLDER}/out/target/product/ginkgo"
 
 # ROM
-ROMNAME="floko"                      # This is for filename
+ROMNAME="FlokoROM"                      # This is for filename
 ROM="lineage"                        # This is for build
 DEVICE="ginkgo"
 TARGET="user"
@@ -52,14 +52,14 @@ build() {
 # Checker
 check() {
     if ! [ -f "$OUT"/*$VERSION*.zip ]; then
-      END=$(date +"%s")
-	    DIFF=$(( END - START ))
-	    tg_cast "Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
-	            "Check log below"
-      "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
-	    self_destruct
+        END=$(date +"%s")
+        DIFF=$(( END - START ))
+        tg_cast "${ROMNAME} Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
+	        "Check log below"
+        "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
+	self_destruct
     else
-      gdrive
+        gdrive
     fi
 }
 
@@ -103,7 +103,7 @@ success() {
 # Let's start
 START=$(date +"%s")
 tg_cast "<b>STARTING ROM BUILD</b>" \
-        "ROM: <code>${ROM}</code>" \
+        "ROM: <code>${ROMNAME}</code>" \
         "Device: ${DEVICE}" \
         "Version: <code>${VERSION}</code>" \
         "Build Start: <code>${START}</code>"
