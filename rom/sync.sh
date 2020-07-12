@@ -9,8 +9,8 @@ BRANCH=ten
 LOC_MANIFEST="https://github.com/azrim/local_manifests.git"
 LOC_BRANCH=ginkgo
 
-TOKEN="1022672063:AAEQkscD_uo_Ls_PSofE6oCCeE0u7YaumC4"
-CHAT_ID="-1001254060097"
+TOKEN=""
+CHAT_ID=""
 
 # workdir
 FOLDER=$HOME/$ROM
@@ -27,7 +27,7 @@ if ! [ -f "$FOLDER"/.repo/manifest.xml ]; then
 fi
 
 # cloning local manifest
-if [ -f "$FOLDER"/.repo/lo*/*.xml ]; then
+if [ -f "$FOLDER"/.repo/local_manifests/local_manifest.xml ]; then
     rm -rf "$FOLDER"/.repo/local_manifests
 fi
 
