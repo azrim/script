@@ -38,7 +38,7 @@ tg_cast() {
 # cleaning env
 cleanup() {
     rm "${FOLDER}/*.txt"
-    rm "$OUT/*$VERSION*.zip"
+    rm "$OUT/*.zip"
 }
 
 # Build
