@@ -82,7 +82,7 @@ self_destruct() {
 
 # Gdrive
 gdrive() {
-    gd upload "$OUT"/*$TYPE*.zip | tee -a gd-up.txt
+    gd upload "$OUT"/*$VERSION*.zip | tee -a gd-up.txt
     FILEID=$(cat gd-up.txt | tail -n 1 | awk '{ print $2 }')
     gd share "$FILEID"
     gd info "$FILEID" | tee -a gd-info.txt
