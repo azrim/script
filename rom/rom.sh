@@ -7,12 +7,13 @@ FOLDER="${PWD}"
 OUT="${FOLDER}/out/target/product/ginkgo"
 
 # ROM
-ROMNAME="FlokoROM"                      # This is for filename
+ROMNAME="FlokoROM"                   # This is for filename
 ROM="lineage"                        # This is for build
 DEVICE="ginkgo"
 TARGET="user"
 VERSIONING="FLOKO_BUILD_TYPE"
 VERSION="OFFICIAL"
+CLEANING=""                          # set "clean" for make clean, "clobber" for make clean && make clobber, don't set for dirty build
 
 # TELEGRAM
 CHATID=""                            # Group/channel chatid (use rose/userbot to get it)
@@ -39,6 +40,15 @@ tg_cast() {
 cleanup() {
     rm "${FOLDER}/*.txt"
     rm "$OUT/*.zip"
+    if [[ "${CLEANING}" =~ "clean" ]]; then
+        make clean
+	build
+    elif [[ "${CLEANING}" =~ "clobber" ]]; then
+        make clean && make clobber
+	build
+    else
+        build
+    fi
 }
 
 # Build
@@ -108,5 +118,4 @@ tg_cast "<b>STARTING ROM BUILD</b>" \
         "Version: <code>${VERSION}</code>" \
         "Build Start: <code>${START}</code>"
 cleanup
-build
 check
