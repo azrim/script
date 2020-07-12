@@ -55,7 +55,7 @@ check() {
       END=$(date +"%s")
 	    DIFF=$(( END - START ))
 	    tg_cast "Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
-              "I will shutdown myself in 30m @azrim89, stop me if you can :P"
+	            "Check log below"
       "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
 	    self_destruct
     else
@@ -65,6 +65,7 @@ check() {
 
 # Self destruct
 self_destruct() {
+    tg_cast "I will shutdown myself in 30m, catch me if you can :P"
     sleep 30m
     sudo shutdown -h now
 }
@@ -86,7 +87,7 @@ gdrive() {
 # done
 success() {
     END=$(date +"%s")
-	  DIFF=$(( END - START ))
+    DIFF=$(( END - START ))
     tg_cast "<b>ROM Build Completed Successfully</b>" \
             "Build took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
             "----------------------------------------" \
@@ -96,6 +97,7 @@ success() {
 	          "MD5: <code>${MD5SUM}</code>" \
             "Download Link: ${LINKBUTTON}
     "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
+    self_destruct
 }
 
 # Let's start
