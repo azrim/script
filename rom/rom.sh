@@ -38,8 +38,8 @@ tg_cast() {
 
 # cleaning env
 cleanup() {
-    if [ -f "$OUT/*.zip" ]; then
-        rm "$OUT/*.zip"
+    if [ -f "$OUT"/*.zip ]; then
+        rm "$OUT"/*.zip
     fi
     if [ -f gd-up.txt ]; then
         rm gd-up.txt
