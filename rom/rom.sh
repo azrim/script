@@ -38,8 +38,15 @@ tg_cast() {
 
 # cleaning env
 cleanup() {
-    rm "${FOLDER}/*.txt"
-    rm "$OUT/*.zip"
+    if [ -f "$OUT/*.zip" ]; then
+        rm "$OUT/*.zip"
+    fi
+    if [ -f gd-up.txt ]; then
+        rm gd-up.txt
+    fi
+    if [ -f gd-info.txt ]; then
+        rm gd-info.txt
+    fi
     if [[ "${CLEANING}" =~ "clean" ]]; then
         make clean
 	build
@@ -100,9 +107,10 @@ success() {
     DIFF=$(( END - START ))
     tg_cast "<b>ROM Build Completed Successfully</b>" \
             "Build took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
-            "----------------------------------------" \
-            "ROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION} "\
+            "------------------------------------------------" \
+            "ROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION}" \
 	    "Filename: ${NAME}" \
+	    "Date: ${BUILD_DATE}" \
 	    "Size: <code>${SIZE}</code>" \
 	    "MD5: <code>${MD5SUM}</code>" \
             "${LINKBUTTON}"
@@ -111,11 +119,12 @@ success() {
 }
 
 # Let's start
+BUILD_DATE="$(date)"
 START=$(date +"%s")
 tg_cast "<b>STARTING ROM BUILD</b>" \
         "ROM: <code>${ROMNAME}</code>" \
         "Device: ${DEVICE}" \
         "Version: <code>${VERSION}</code>" \
-        "Build Start: <code>${START}</code>"
+        "Build Start: <code>${BUILD_DATE}</code>"
 cleanup
 check
