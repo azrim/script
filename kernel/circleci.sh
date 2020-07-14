@@ -4,7 +4,6 @@
 # All rights reserved.
 
 # Init
-cd ../../
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz             # if use single file define as Image.gz-dtb instead
@@ -54,9 +53,7 @@ TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
 BANNER_LINK="https://github.com/azrim/script/raw/master/kernel/photo_2020-07-14_22-05-46.jpg"
 BANNER="$HOME/logo/kernel.png"
-if ! [ -f "${BANNER}" ]; then
-    wget $BANNER_LINK -O $BANNER
-fi
+wget $BANNER_LINK -O $BANNER
 
 # Export Telegram.sh
 TELEGRAM_FOLDER="${HOME}"/telegram
