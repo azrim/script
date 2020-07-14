@@ -4,6 +4,7 @@
 # All rights reserved.
 
 # Init
+cd ../../
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz             # if use single file define as Image.gz-dtb instead
