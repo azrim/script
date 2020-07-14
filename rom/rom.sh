@@ -97,7 +97,6 @@ gdrive() {
     NAME=$(cat gd-info.txt | grep 'Name' | awk '{ print $2 }')
     SIZE=$(cat gd-info.txt | grep 'Size' | awk '{ print $2 }')
     DLURL=$(cat gd-info.txt | grep 'DownloadUrl' | awk '{ print $2 }')
-    LINKBUTTON="[Download](buttonurl://${DLURL})"
     success
 }
 
@@ -105,16 +104,7 @@ gdrive() {
 success() {
     END=$(date +"%s")
     DIFF=$(( END - START ))
-    tg_cast "<b>ROM Build Completed Successfully</b>" \
-            "Build took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
-            "------------------------------------------------" \
-            "ROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION}" \
-	    "Filename: ${NAME}" \
-	    "Date: ${BUILD_DATE}" \
-	    "Size: <code>${SIZE}</code>" \
-	    "MD5: <code>${MD5SUM}</code>" \
-            "${LINKBUTTON}"
-    "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
+    curl -H "Content-Type: application/json" -X POST -d '{"chat_id":${CHATID}, "text":"<b>ROM Build Completed Successfully</b>\nBuild took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!\n------------------------------------------------\nROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION}\nFilename: ${NAME}\nDate: ${BUILD_DATE}\nSize: <code>${SIZE}</code>\nMD5: <code>${MD5SUM}</code>, "reply_markup": {"inline_keyboard": [[{"text":"Download", "url": ${DLURL}}]]} }' https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage
     self_destruct
 }
 
