@@ -19,6 +19,13 @@ CLEANING=""                          # set "clean" for make clean, "clobber" for
 CHATID=""                            # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN=""                    # Get from botfather
 
+# Logo
+BANNER_LINK="https://img.xda-cdn.com/GsL53OqVxQLtx_Wk_kqNmL5kQN0=/https%3A%2F%2Fimg.xda-cdn.com%2FZieNkg8j34wm-l7DWWVpPdqwAXc%3D%2Fhttps%253A%252F%252Fwiki.maud.io%252Fuploads%252Ffloko-logo-banner.png"
+BANNER="$HOME/logo/floko.png"
+if ! [ -f "${BANNER}" ]; then
+    wget $BANNER_LINK -O $BANNER
+fi
+
 # Export Telegram.sh
 TELEGRAM_FOLDER="${HOME}"/telegram
 if ! [ -d "${TELEGRAM_FOLDER}" ]; then
@@ -33,6 +40,15 @@ tg_cast() {
 		for POST in "${@}"; do
 			echo "${POST}"
 		done
+    )"
+}
+
+tg_pub() {
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -T "ROM BUILD COMPLETE" -i "$BANNER" -M \
+    "$(
+                for POST in "${@}"; do
+                        echo "${POST}"
+                done
     )"
 }
 
@@ -105,15 +121,13 @@ gdrive() {
 success() {
     END=$(date +"%s")
     DIFF=$(( END - START ))
-    tg_cast "<b>ROM Build Completed Successfully</b>" \
-            "Build took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!" \
-            "------------------------------------------------" \
-            "ROM: <code>${ROMNAME}</code> ${DEVICE} ${VERSION}" \
-	    "Filename: ${NAME}" \
-	    "Date: ${BUILD_DATE}" \
-	    "Size: <code>${SIZE}</code>" \
-	    "MD5: <code>${MD5SUM}</code>" \
-            "${LINKBUTTON}"
+    tg_pub  "Build took *$((DIFF / 60))* minute(s) and *$((DIFF % 60))* second(s)!" \
+            "--------------------------------------------------------------------" \
+            "ROM: ${NAME}" \
+            "Date: ${BUILD_DATE}" \
+            "${SIZE}" \
+            "MD5: ${MD5SUM}" \
+            "*Link:* ${LINKBUTTON}"
     "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
     self_destruct
 }
