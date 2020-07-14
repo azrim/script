@@ -48,8 +48,8 @@ TEMPZIPNAME="${KERNELNAME}-unsigned.zip"
 ZIPNAME="${KERNELNAME}.zip"
 
 # Telegram
-CHATID="" # Group/channel chatid (use rose/userbot to get it)
-TELEGRAM_TOKEN="" # Get from botfather
+CHATID="-1001156668998" # Group/channel chatid (use rose/userbot to get it)
+TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
 BANNER_LINK="https://github.com/azrim/script/raw/master/kernel/photo_2020-07-14_22-05-46.jpg"
 BANNER="$HOME/logo/kernel.png"
