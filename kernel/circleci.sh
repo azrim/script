@@ -143,7 +143,7 @@ packingkernel() {
 }
 
 # Starting
-tg_channelcast "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
+tg_pub "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
   "Compiler: <code>${COMP_TYPE}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}, ${KERNELRELEASE}</code>" \
