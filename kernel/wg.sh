@@ -4,7 +4,7 @@
 # init
 KERNEL_DIR="$PWD"
 WG="$HOME"/wireguard
-WGVER="1.0.20200623" #get latest tag from here: https://git.zx2c4.com/wireguard-linux-compat
+WGVER="1.0.20200712" #get latest tag from here: https://git.zx2c4.com/wireguard-linux-compat
 
 # execute
 mkdir "$WG"
