@@ -31,7 +31,7 @@ else
 fi
 
 # Defconfig
-DEFCONFIG="vendor/ginkgo-perf_defconfig"
+DEFCONFIG="silont-perf_defconfig"
 REGENERATE_DEFCONFIG="true" # unset if don't want to regenerate defconfig
 
 # Costumize
