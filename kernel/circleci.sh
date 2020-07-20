@@ -30,6 +30,7 @@ GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
+    CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
     COMP_PATH="$CLANG_DIR/bin:${PATH}"
 else
     COMP_PATH="${GCC_DIR}/bin:${GCC32_DIR}/bin:${PATH}"
@@ -142,9 +143,9 @@ packingkernel() {
 
 # Starting
 tg_cast "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
-  "Compiler: <code>${COMP_TYPE}</code>" \
+  "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
-	"Kernel: <code>${KERNEL}, ${KERNELRELEASE}</code>" \
+	"Kernel: <code>${KERNEL}</code>" \
 	"Linux Version: <code>$(make kernelversion)</code>" \
 	"Branch: <code>${PARSE_BRANCH}</code>" \
 	"Commit point: <code>${COMMIT_POINT}</code>" \
@@ -154,4 +155,4 @@ makekernel
 packingkernel
 END=$(date +"%s")
 DIFF=$(( END - START ))
-tg_cast "Build for ${DEVICE} with ${COMPILER_STRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrim89"
+tg_cast "Build for ${DEVICE} with ${CSTRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrim89"
