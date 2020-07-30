@@ -125,7 +125,7 @@ success() {
             "ROM: ${NAME}" \
             "Date: ${BUILD_DATE}" \
             "${SIZE}" \
-            "MD5: ${MD5SUM}" , "reply_markup": {"inline_keyboard": [[{"text":"Download Link", "url": "https://yourlink"}]]} }' -H "Content-Type: application/json" -X POST https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage
+            "MD5: ${MD5SUM}" , "reply_markup": {"inline_keyboard": [[{"text":"Download Link", "url": "${DLURL}}]]} }' -H "Content-Type: application/json" -X POST https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage
     "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
     self_destruct
 }
