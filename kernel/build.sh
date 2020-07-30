@@ -134,3 +134,4 @@ packingkernel
 END=$(date +"%s")
 DIFF=$(( END - START ))
 tg_cast "Build for ${DEVICE} with ${COMPILER_STRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrim89"
+curl -d '{"chat_id":${CHATID}, "text":"Whatever u want", "reply_markup": {"inline_keyboard": [[{"text":"What ever u want", "url": "what ever u want"}]]} }' -H "Content-Type: application/json" -X POST https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage
