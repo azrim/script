@@ -113,7 +113,6 @@ gdrive() {
     NAME=$(cat gd-info.txt | grep 'Name' | awk '{ print $2 }')
     SIZE=$(cat gd-info.txt | grep 'Size' | awk '{ print $2 }')
     DLURL=$(cat gd-info.txt | grep 'DownloadUrl' | awk '{ print $2 }')
-    LINKBUTTON="[Download](buttonurl://${DLURL})"
     success
 }
 
@@ -121,13 +120,12 @@ gdrive() {
 success() {
     END=$(date +"%s")
     DIFF=$(( END - START ))
-    tg_pub  "Build took *$((DIFF / 60))* minute(s) and *$((DIFF % 60))* second(s)!" \
+    curl -d '{"chat_id":${CHATID}, "text":"Build took *$((DIFF / 60))* minute(s) and *$((DIFF % 60))* second(s)!" \
             "--------------------------------------------------------------------" \
             "ROM: ${NAME}" \
             "Date: ${BUILD_DATE}" \
             "${SIZE}" \
-            "MD5: ${MD5SUM}" \
-            "*Link:* ${LINKBUTTON}"
+            "MD5: ${MD5SUM}" , "reply_markup": {"inline_keyboard": [[{"text":"Download Link", "url": "https://yourlink"}]]} }' -H "Content-Type: application/json" -X POST https://api.telegram.org/bot${TELEGRAN_TOKEN}/sendMessage
     "${TELEGRAM}" -f log.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
     self_destruct
 }
