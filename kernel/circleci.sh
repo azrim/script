@@ -75,7 +75,7 @@ tg_cast() {
 }
 
 tg_pub() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER" -M \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
@@ -139,11 +139,11 @@ packingkernel() {
     java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     # Ship it to the CI channel
-    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHAT_ID}"
+    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
 }
 
 # Starting
-tg_cast "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
+tg_pub "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
   "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}</code>" \
