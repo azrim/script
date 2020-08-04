@@ -22,7 +22,7 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
-CLANG_DIR="prclang"
+CLANG_DIR="/prclang"
 if ! [ -d "${CLANG_DIR}" ]; then
     ls ${PWD}
     echo "---------------------"
