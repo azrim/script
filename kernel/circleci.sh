@@ -75,7 +75,7 @@ tg_cast() {
 }
 
 tg_pub() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -i "$BANNER" -M \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER" -M \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
