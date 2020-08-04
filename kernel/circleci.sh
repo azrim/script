@@ -25,6 +25,10 @@ COMP_TYPE="clang" # unset if want to use gcc as compiler
 CLANG_DIR="prclang"
 if ! [ -d "${CLANG_DIR}" ]; then
     ls ${PWD}
+    echo "---------------------"
+    ls $HOME
+    echo "+++++++++++++++++++++"
+    ls ../
     exit
 fi
 GCC_DIR="" # Doesn't needed if use proton-clang
