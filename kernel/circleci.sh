@@ -23,14 +23,6 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
 CLANG_DIR="/prclang"
-if ! [ -d "${CLANG_DIR}" ]; then
-    ls ${PWD}
-    echo "---------------------"
-    ls $HOME
-    echo "+++++++++++++++++++++"
-    ls ../
-    exit
-fi
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
@@ -157,6 +149,7 @@ tg_pub "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
 	"Branch: <code>${PARSE_BRANCH}</code>" \
 	"Commit point: <code>${COMMIT_POINT}</code>" \
 	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>"
+        "Build URL: ${CIRCLE_BUILD_URL}"
 START=$(date +"%s")
 makekernel
 packingkernel
