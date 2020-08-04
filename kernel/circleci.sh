@@ -6,14 +6,14 @@
 # Init
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
-KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz             # if use single file define as Image.gz-dtb instead
-KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/xiaomi/qcom-base/trinket.dtb # and comment this variable
+KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
+KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
 
 # Repo URL
 CLANG_REPO="https://github.com/kdrag0n/proton-clang"
 ANYKERNEL_REPO="https://github.com/azrim/kerneltemplate.git"
-ANYKERNEL_BRANCH="dtb"
+ANYKERNEL_BRANCH="master"
 
 # Repo info
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -54,7 +54,7 @@ CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/20200729_202836.jpg"
-BANNER="$KERNEL_DIR"/logokernel.jpg
+BANNER="$KERNEL_DIR/logokernel.jpg"
 curl -o $BANNER $BANNER_LINK
 
 # Export Telegram.sh
@@ -104,6 +104,9 @@ makekernel() {
     else
       	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
     fi
+    git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
+    python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
+    create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/*.dtbo"
     # Check If compilation is success
     if ! [ -f "${KERN_IMG}" ]; then
 	    END=$(date +"%s")
@@ -124,10 +127,8 @@ packingkernel() {
     if [[ "${DTB_TYPE}" =~ "single" ]]; then
         cp "${KERN_IMG}" "${ANYKERNEL}"/Image.gz-dtb
     else
-        mkdir "${ANYKERNEL}"/kernel/
-        cp "${KERN_IMG}" "${ANYKERNEL}"/kernel/Image.gz
-        mkdir "${ANYKERNEL}"/dtbs/
-        cp "${KERN_DTB}" "${ANYKERNEL}"/dtbs/trinket.dtb
+        cp "${KERN_IMG}" "${ANYKERNEL}"/Image.gz-dtb
+        cp "${KERN_DTB}" "${ANYKERNEL}"/dtbo.img
     fi
 
     # Zip the kernel, or fail
