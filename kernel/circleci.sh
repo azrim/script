@@ -66,7 +66,7 @@ fi
 TELEGRAM="${TELEGRAM_FOLDER}"/telegram
 
 tg_cast() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -H \
     "$(
 		for POST in "${@}"; do
 			echo "${POST}"
@@ -139,7 +139,7 @@ packingkernel() {
     java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     # Ship it to the CI channel
-    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}"
+    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHAT_ID}"
 }
 
 # Starting
