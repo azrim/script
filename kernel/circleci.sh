@@ -23,9 +23,10 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
 CLANG_DIR="prclang"
-#if ! [ -d "${CLANG_DIR}" ]; then
-#    git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
-#fi
+if ! [ -d "${CLANG_DIR}" ]; then
+    ls ${PWD}
+    exit
+fi
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
@@ -75,7 +76,7 @@ tg_cast() {
 }
 
 tg_pub() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER" -H \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER_LINK" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
