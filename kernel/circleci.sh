@@ -7,7 +7,7 @@
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz             # if use single file define as Image.gz-dtb instead
-KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/qcom/trinket.dtb # and comment this variable
+KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dts/xiaomi/qcom-base/trinket.dtb # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
 
 # Repo URL
@@ -49,10 +49,11 @@ TEMPZIPNAME="${KERNELNAME}-unsigned.zip"
 ZIPNAME="${KERNELNAME}.zip"
 
 # Telegram
-CHATID="-1001156668998" # Group/channel chatid (use rose/userbot to get it)
+CHANNEL="-1001156668998"
+CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
-BANNER_LINK="https://github.com/azrim/script/raw/master/kernel/photo_2020-07-14_22-05-46.jpg"
+BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/20200729_202836.jpg"
 BANNER="$KERNEL_DIR"/logokernel.jpg
 curl -o $BANNER $BANNER_LINK
 
@@ -138,7 +139,7 @@ packingkernel() {
     java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     # Ship it to the CI channel
-    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
+    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}"
 }
 
 # Starting
