@@ -22,10 +22,10 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
-CLANG_DIR="$HOME/proton-clang"
-if ! [ -d "${CLANG_DIR}" ]; then
-    git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
-fi
+CLANG_DIR="prclang"
+#if ! [ -d "${CLANG_DIR}" ]; then
+#    git clone "$CLANG_REPO" --depth=1 "$CLANG_DIR"
+#fi
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
