@@ -11,7 +11,6 @@ KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variabl
 ANYKERNEL="${HOME}"/anykernel
 
 # Repo URL
-CLANG_REPO="https://github.com/kdrag0n/proton-clang"
 ANYKERNEL_REPO="https://github.com/azrim/kerneltemplate.git"
 ANYKERNEL_BRANCH="master"
 
@@ -105,7 +104,7 @@ makekernel() {
     python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
     create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/ginkgo-trinket-overlay.dtbo"
     # Check If compilation is success
-    if ! [ -f "${KERN_IMG}" ]; then
+    if ! [ -f "${KERN_DTB}" ]; then
 	    END=$(date +"%s")
 	    DIFF=$(( END - START ))
 	    echo -e "Kernel compilation failed, See buildlog to fix errors"
@@ -141,7 +140,7 @@ packingkernel() {
 }
 
 # Starting
-tg_pub "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
+tg_cast "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
   "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}</code>" \
