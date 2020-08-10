@@ -147,7 +147,7 @@ tg_cast "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
 	"Linux Version: <code>$(make kernelversion)</code>" \
 	"Branch: <code>${PARSE_BRANCH}</code>" \
 	"Commit point: <code>${COMMIT_POINT}</code>" \
-	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>"
+	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>" \
         "Build URL: ${CIRCLE_BUILD_URL}"
 START=$(date +"%s")
 makekernel
