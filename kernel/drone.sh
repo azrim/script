@@ -47,7 +47,7 @@ ZIPNAME="${KERNELNAME}.zip"
 # Telegram
 CHANNEL="-1001156668998"
 CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
-TELEGRAM_TOKEN=${BOT_API_KEY} # Get from botfather
+TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/20200729_202836.jpg"
 BANNER="$KERNEL_DIR/logokernel.jpg"
