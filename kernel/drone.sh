@@ -141,7 +141,8 @@ packingkernel() {
 
 # Starting
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
-  "Compiler: <code>${CSTRING}</code>" \
+        "Compiling with $(nproc --all) CPUs" \
+        "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}</code>" \
 	"Linux Version: <code>$(make kernelversion)</code>" \
