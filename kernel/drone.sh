@@ -49,7 +49,7 @@ CHANNEL="-1001156668998"
 CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN="1022672063:AAGyqzytMv6Qlv_b1xOsNC1e-btzhAm7Ri8" # YEAH USE THIS IDC
 
-BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/20200729_202836.jpg"
+BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
 BANNER="$KERNEL_DIR/logokernel.jpg"
 #curl -o $BANNER $BANNER_LINK
 
@@ -71,7 +71,7 @@ tg_cast() {
 }
 
 tg_pub() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER_LINK" -H \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -i "$BANNER" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
@@ -100,16 +100,18 @@ makekernel() {
     else
       	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
     fi
-    git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
-    python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
-    create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/ginkgo-trinket-overlay.dtbo"
+#    git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
+#    python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
+#    create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/ginkgo-trinket-overlay.dtbo"
     # Check If compilation is success
     if ! [ -f "${KERN_IMG}" ]; then
+        if ! [ -f "${DTBO_IMG}" ]; then
 	    END=$(date +"%s")
 	    DIFF=$(( END - START ))
 	    echo -e "Kernel compilation failed, See buildlog to fix errors"
 	    tg_cast "Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! Check Instance for errors @azrim89"
 	    exit 1
+	fi
     fi
 }
 
@@ -140,7 +142,8 @@ packingkernel() {
 }
 
 # Starting
-tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
+tg_cast "test"
+tg_pub "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
