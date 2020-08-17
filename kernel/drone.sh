@@ -50,8 +50,8 @@ CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN="1022672063:AAGyqzytMv6Qlv_b1xOsNC1e-btzhAm7Ri8" # YEAH USE THIS IDC
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
-BANNER="$KERNEL_DIR/logokernel.jpg"
-#curl -o $BANNER $BANNER_LINK
+BANNER="${TELEGRAM_FOLDER}"/logokernel.jpg
+curl -o $BANNER $BANNER_LINK
 
 # Export Telegram.sh
 TELEGRAM_FOLDER="${HOME}"/telegram
