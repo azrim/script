@@ -51,7 +51,7 @@ TELEGRAM_TOKEN="1022672063:AAGyqzytMv6Qlv_b1xOsNC1e-btzhAm7Ri8" # YEAH USE THIS 
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
 BANNER="${TELEGRAM_FOLDER}"/logokernel.jpg
-curl -o $BANNER $BANNER_LINK
+#curl -o $BANNER $BANNER_LINK
 
 # Export Telegram.sh
 TELEGRAM_FOLDER="${HOME}"/telegram
@@ -110,6 +110,8 @@ makekernel() {
 	    DIFF=$(( END - START ))
 	    echo -e "Kernel compilation failed, See buildlog to fix errors"
 	    tg_cast "Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! Check Instance for errors @azrim89"
+	    ls "${KERNEL_DIR}"/out/arch/arm64/boot | tee "${KERNEL_DIR}"/ls.txt
+	    "${TELEGRAM}" -f "${KERNEL_DIR}"/ls.txt -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
 	    exit 1
 	fi
     fi
@@ -143,7 +145,7 @@ packingkernel() {
 
 # Starting
 #tg_cast "test"
-tg_pub "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
+tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
