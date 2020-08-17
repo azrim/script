@@ -6,7 +6,7 @@
 # Init
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
-KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
+KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.lz4-dtb             # if use single file define as Image.gz-dtb instead
 KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
 
@@ -142,7 +142,7 @@ packingkernel() {
 }
 
 # Starting
-tg_cast "test"
+#tg_cast "test"
 tg_pub "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
