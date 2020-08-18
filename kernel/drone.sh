@@ -3,7 +3,10 @@
 # Copyright (C) 2020 azrim.
 # All rights reserved.
 
-chmod +x /mnt/workdir/secret/token.sh
+get_token() {
+    chmod +x /mnt/workdir/secret/token.sh
+    ./mnt/workdir/secret/token.sh
+}
 
 # Init
 KERNEL_DIR="${PWD}"
@@ -147,6 +150,7 @@ packingkernel() {
 
 # Starting
 #tg_cast "test"
+get_token
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
