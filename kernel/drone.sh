@@ -3,6 +3,8 @@
 # Copyright (C) 2020 azrim.
 # All rights reserved.
 
+chmod +x /mnt/workdir/secret/token.sh
+
 # Init
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
@@ -47,7 +49,7 @@ ZIPNAME="${KERNELNAME}.zip"
 # Telegram
 CHANNEL="-1001156668998"
 CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
-TELEGRAM_TOKEN="1022672063:AAGyqzytMv6Qlv_b1xOsNC1e-btzhAm7Ri8" # YEAH USE THIS IDC
+TELEGRAM_TOKEN="${TOKEN}"
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
 BANNER="${TELEGRAM_FOLDER}"/logokernel.jpg
