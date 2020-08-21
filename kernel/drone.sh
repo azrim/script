@@ -4,7 +4,6 @@
 # All rights reserved.
 
 get_token() {
-    chmod +x /mnt/workdir/secret/token.sh
     source /mnt/workdir/secret/token.sh
 }
 
