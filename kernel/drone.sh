@@ -3,10 +3,6 @@
 # Copyright (C) 2020 azrim.
 # All rights reserved.
 
-get_token() {
-    source /mnt/workdir/secret/token.sh
-}
-
 # Init
 KERNEL_DIR="${PWD}"
 DTB_TYPE="" # define as "single" if want use single file
@@ -149,7 +145,6 @@ packingkernel() {
 
 # Starting
 #tg_cast "test"
-get_token
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
