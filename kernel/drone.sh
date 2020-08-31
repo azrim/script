@@ -25,6 +25,7 @@ CLANG_DIR="/mnt/workdir/proton-clang"
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
+git clone https://github.com/silont-project/silont-clang $CLANG_DIR
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
     COMP_PATH="$CLANG_DIR/bin:${PATH}"
@@ -47,7 +48,7 @@ ZIPNAME="${KERNELNAME}.zip"
 # Telegram
 CHANNEL="-1001156668998"
 CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
-TELEGRAM_TOKEN="1022672063:AAHZ-S-phBWflX98glW6obUKWSvwGZLmb-U"
+TELEGRAM_TOKEN="1022672063:AAFmHp5RiArtH4sJXLs0p9WYfG-EUL155Sw"
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
 BANNER="${TELEGRAM_FOLDER}"/logokernel.jpg
@@ -101,8 +102,8 @@ makekernel() {
       	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
     fi
     git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
-    python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
-    create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/ginkgo-trinket-overlay.dtbo"
+    #python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
+    #create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/xiaomi/ginkgo-trinket-overlay.dtbo"
     # Check If compilation is success
     if ! [ -f "${KERN_IMG}" ]; then
         if ! [ -f "${DTBO_IMG}" ]; then
