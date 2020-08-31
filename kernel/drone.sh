@@ -25,7 +25,7 @@ CLANG_DIR="/mnt/workdir/proton-clang"
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
-git clone https://github.com/silont-project/silont-clang $CLANG_DIR
+git clone https://github.com/silont-project/silont-clang --depth=1 $CLANG_DIR
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
     COMP_PATH="$CLANG_DIR/bin:${PATH}"
