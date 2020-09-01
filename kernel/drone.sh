@@ -21,7 +21,7 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
 COMP_TYPE="clang" # unset if want to use gcc as compiler
-CLANG_DIR="/mnt/workdir/proton-clang"
+CLANG_DIR="/mnt/workdir/silont-clang"
 GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 
