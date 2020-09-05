@@ -48,7 +48,7 @@ ZIPNAME="${KERNELNAME}.zip"
 # Telegram
 CHANNEL="-1001156668998"
 CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
-TELEGRAM_TOKEN="1022672063:AAFmHp5RiArtH4sJXLs0p9WYfG-EUL155Sw"
+TELEGRAM_TOKEN="1022672063:AAHawNuKPOoId5lcWkZVmWIBjlwzyTzr2tk"
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/Ginkgay.png"
 BANNER="${TELEGRAM_FOLDER}"/logokernel.jpg
