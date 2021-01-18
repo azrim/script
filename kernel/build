@@ -42,7 +42,7 @@ else
 fi
 
 # Defconfig
-DEFCONFIG="silont-perf_defconfig"
+DEFCONFIG="surya_defconfig"
 REGENERATE_DEFCONFIG="" # unset if don't want to regenerate defconfig
 
 # Telegram
