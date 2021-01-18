@@ -31,7 +31,7 @@ CLANG_FILE="/mnt/workdir/clang.tar.gz"
 
 #git clone https://github.com/silont-project/silont-clang --depth=1 $CLANG_DIR
 
-wget $CLANG_URL -O $CLANG_FILE
+wget $CLANG_URL -O $CLANG_FILE -q
 tar xvzf $CLANG_FILE -C "$CLANG_DIR_DL"
 CLANG_DIR=$CLANG_DIR/$(ls $CLANG_DIR_DL)
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
