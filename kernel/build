@@ -109,12 +109,6 @@ makekernel() {
       	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
     fi
     # Check If compilation is success
-    if ! [ -f "${KERN_IMG}" ]; then
-        build_failed
-    fi
-    if ! [ -f "${DTBO_IMG}" ]; then
-        build_failed
-    fi
     packingkernel
 }
 
@@ -125,6 +119,12 @@ packingkernel() {
         rm -rf "${ANYKERNEL}"
     fi
     git clone "$ANYKERNEL_REPO" -b "$ANYKERNEL_BRANCH" "${ANYKERNEL}"
+    if ! [ -f "${KERN_IMG}" ]; then
+        build_failed
+    fi
+    if ! [ -f "${KERN_DTB}" ]; then
+        build_failed
+    fi
     if [[ "${DTB_TYPE}" =~ "single" ]]; then
         cp "${KERN_IMG}" "${ANYKERNEL}"/Image.gz-dtb
     else
