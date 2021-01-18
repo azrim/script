@@ -33,7 +33,7 @@ CLANG_FILE="/mnt/workdir/clang.tar.gz"
 
 wget $CLANG_URL -O $CLANG_FILE -q
 tar xvzf $CLANG_FILE -C "$CLANG_DIR_DL"
-CLANG_DIR=$CLANG_DIR/$(ls $CLANG_DIR_DL)
+CLANG_DIR=$CLANG_DIR_DL/$(ls $CLANG_DIR_DL)
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
     COMP_PATH="$CLANG_DIR/bin:${PATH}"
@@ -46,7 +46,7 @@ DEFCONFIG="silont-perf_defconfig"
 REGENERATE_DEFCONFIG="" # unset if don't want to regenerate defconfig
 
 # Telegram
-CHATID="${CHANNEL_ID}" # Group/channel chatid (use rose/userbot to get it)
+CHATID="$CHANNEL_ID" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN="${TG_TOKEN}"
 
 # Export Telegram.sh
@@ -57,7 +57,7 @@ fi
 
 TELEGRAM="${TELEGRAM_FOLDER}"/telegram
 tg_cast() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHANNEL}" -H \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
     "$(
 		for POST in "${@}"; do
 			echo "${POST}"
