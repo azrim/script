@@ -73,6 +73,7 @@ versioning() {
 }
 
 # Costumize
+versioning
 KERNEL="[TEST]SiLonT"
 DEVICE="Surya"
 KERNELTYPE="$CONFIG_LOCALVERSION"
