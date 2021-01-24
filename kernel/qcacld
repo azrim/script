@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Copyright (C) 2020 azrim.
+# All rights reserved.
+
+# VAR
+DIR=$PWD
+TAG=$1
+
+qcacld="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0"
+fw_api="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/fw-api"
+qca_wifi_host_cmn="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn"
+audio="https://source.codeaurora.org/quic/la/platform/vendor/opensource/audio-kernel/"
+data="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/data-kernel/"
+
+merge() {
+    #just for initial merge
+    git subtree add --prefix drivers/staging/qcacld-3.0 $qcacld $TAG
+    git subtree add --prefix drivers/staging/fw-api $fw_api $TAG
+    git subtree add --prefix drivers/staging/qca-wifi-host-cmn $qca_wifi_host_cmn $TAG
+    git subtree add --prefix techpack/audio $audio $TAG
+    git subtree add --prefix techpack/data $data $TAG
+}
+
+merge
