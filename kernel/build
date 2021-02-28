@@ -64,6 +64,14 @@ tg_cast() {
 		done
     )"
 }
+tg_ship() {
+    "${TELEGRAM}" -f "${ZIPNAME}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
+    "$(
+                for POST in "${@}"; do
+                        echo "${POST}"
+                done
+    )"
+}
 
 # Versioning
 versioning() {
@@ -141,12 +149,21 @@ packingkernel() {
     curl -sLo zipsigner-3.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel2/master/zipsigner-3.0.jar
     java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
+    END=$(date +"%s")
+    DIFF=$(( END - START ))
+
     # Ship it to the CI channel
-    "${TELEGRAM}" -f "$ZIPNAME" -t "${TELEGRAM_TOKEN}" -c "${CHATID}"
+    tg_ship "<b>-------- Build Succeed --------</b>" \
+            "" \
+            "<b>Device:</b> ${DEVICE}" \
+            "<b>Version:</b> ${KERNELTYPE}" \
+            "<b>Commit Head:</b> $(git rev-parse --short HEAD)" \
+            "<b>Time elapsed:</b> $((DIFF / 60)):$((DIFF % 60))" \
+            "" \
+            "Leave a comment below if encountered any bugs!"
 }
 
 # Starting
-#tg_cast "test"
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
         "Compiler: <code>${CSTRING}</code>" \
@@ -158,6 +175,3 @@ tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
 	"Latest commit: <code>${COMMIT_POINT}</code>"
 START=$(date +"%s")
 makekernel
-END=$(date +"%s")
-DIFF=$(( END - START ))
-tg_cast "Build for ${DEVICE} with ${CSTRING} <b>succeed</b> took $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)! @azrim89"
