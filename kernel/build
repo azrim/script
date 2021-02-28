@@ -6,6 +6,8 @@
 
 # Init
 KERNEL_DIR="${PWD}"
+cd $KERNEL_DIR
+CHEAD="$(git rev-parse --short HEAD)"
 DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
 KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
@@ -157,7 +159,7 @@ packingkernel() {
             "" \
             "<b>Device:</b> ${DEVICE}" \
             "<b>Version:</b> ${KERNELTYPE}" \
-            "<b>Commit Head:</b> $(git rev-parse --short HEAD)" \
+            "<b>Commit Head:</b> ${CHEAD}" \
             "<b>Time elapsed:</b> $((DIFF / 60)):$((DIFF % 60))" \
             "" \
             "Leave a comment below if encountered any bugs!"
