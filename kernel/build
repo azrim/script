@@ -168,14 +168,15 @@ packingkernel() {
 # Starting
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
+	"[Drone Build Log](https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER)" \
+	"" \
         "Compiler: <code>${CSTRING}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}</code>" \
 	"Linux Version: <code>$(make kernelversion)</code>" \
 	"Branch: <code>${DRONE_BRANCH}</code>" \
 	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>" \
-	"Latest commit: <code>${COMMIT_POINT}</code>" \
-	"" \
-	"[Drone Build Log](https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER)"
+	"Latest commit: <code>${COMMIT_POINT}</code>"
+
 START=$(date +"%s")
 makekernel
