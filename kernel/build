@@ -176,7 +176,7 @@ tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
 	"Branch: <code>${DRONE_BRANCH}</code>" \
 	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>" \
 	"Latest commit: <code>${COMMIT_POINT}</code>" \
-	"[Drone Build Log](https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER)"
+	"Log: https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER"
 
 START=$(date +"%s")
 makekernel
