@@ -20,7 +20,7 @@ ANYKERNEL_BRANCH="master"
 # Repo info
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PARSE_ORIGIN="$(git config --get remote.origin.url)"
-COMMIT_POINT="$(git log --pretty=format:'%h : %s' -3)"
+COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
 mkdir -p "/mnt/workdir/silont-clang"
@@ -175,7 +175,7 @@ tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
 	"Branch: <code>${DRONE_BRANCH}</code>" \
 	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>" \
 	"Latest commit: <code>${COMMIT_POINT}</code>" \
-	""
+	"" \
 	"[Drone Build Log](https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER)"
 START=$(date +"%s")
 makekernel
