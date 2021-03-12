@@ -3,11 +3,11 @@
 # Copyright (c) 2020 azrim
 
 # Init
-ROM=havoc
-MANIFEST="https://github.com/Havoc-OS/android_manifest.git"
-BRANCH=ten
+ROM=df
+MANIFEST="git://github.com/DerpFest-11/manifest.git"
+BRANCH=11
 LOC_MANIFEST="https://github.com/azrim/local_manifests.git"
-LOC_BRANCH=ginkgo
+LOC_BRANCH=surya
 
 TOKEN=""
 CHAT_ID=""
