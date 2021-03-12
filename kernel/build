@@ -31,6 +31,9 @@ GCC_DIR="" # Doesn't needed if use proton-clang
 GCC32_DIR="" # Doesn't needed if use proton-clang
 CLANG_FILE="/mnt/workdir/clang.tar.gz"
 
+# Java
+JAVA_DIR="${HOME}/openjdk"
+
 git clone https://github.com/silont-project/silont-clang --depth=1 $CLANG_DIR -b master
 
 #wget $CLANG_URL -O $CLANG_FILE -q
@@ -148,8 +151,9 @@ packingkernel() {
     zip -r9 "${TEMPZIPNAME}" ./*
 
     # Sign the zip before sending it to Telegram
+    git clone https://gitlab.com/azrim/openjdk-mirror.git ${JAVA_DIR}
     curl -sLo zipsigner-3.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel2/master/zipsigner-3.0.jar
-    java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
+    ${JAVA_DIR}/bin/java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     END=$(date +"%s")
     DIFF=$(( END - START ))
