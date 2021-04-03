@@ -32,7 +32,7 @@ ANYKERNEL_BRANCH="master"
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
-CLFILE="$KERNEL_DIR/SiLonT-Surya-Weekly.txt"
+CLFILE="SiLonT-Surya-Weekly.txt"
 OFFDEVICE="$KERNEL_DIR/ofcd"
 
 # Compiler
