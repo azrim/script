@@ -15,6 +15,7 @@ SSHSTORE=$KERNEL_DIR/az
 
 setup() {
     echo $SSHKEY > $SSHSTORE
+    chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
     git config --global user.mail "mirzaspc@gmail.com"
