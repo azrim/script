@@ -11,10 +11,12 @@ DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
 KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
-SSHSTORE=$KERNEL_DIR/ssh/az
+SSH_KEY="${SSHKEY}"
+SSHSTORE=$KERNEL_DIR/az
 GITHUB_TOKEN=$GHTOKEN
 setup() {
-    git clone https://azrim:${GITHUB_TOKEN}@github.com/azrim/ssh.git
+    #git clone https://azrim:${GITHUB_TOKEN}@github.com/azrim/ssh.git
+    echo "${SSH_KEY}" >> $SSHSTORE
     chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
