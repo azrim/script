@@ -20,7 +20,7 @@ setup() {
     chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
-    ssh -o StrictHostKeyChecking=no -i $SSHSTORE git@github.com
+    ssh -o StrictHostKeyChecking=no git@github.com
     git config --global user.mail "mirzaspc@gmail.com"
     git config --global user.name "azrim"
 }
@@ -137,7 +137,6 @@ build_failed() {
 
 # Building
 makekernel() {
-    setup
     export PATH="${COMP_PATH}"
     make O=out ARCH=arm64 ${DEFCONFIG}
     if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
@@ -188,6 +187,7 @@ packingkernel() {
 
 #upload to sf
 upload_sf() {
+    setup
     scp $ZIPNAME azrim@frs.sourceforge.net:/home/frs/p/silont-project/surya
     gen_cl
     post
