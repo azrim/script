@@ -20,9 +20,16 @@ setup() {
     chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
-    ssh -o StrictHostKeyChecking=no git@github.com
     git config --global user.mail "mirzaspc@gmail.com"
     git config --global user.name "azrim"
+}
+
+setup_github() {
+    ssh -o StrictHostKeyChecking=no git@github.com
+}
+
+setup_sf() {
+    ssh -o StrictHostKeyChecking=no azrim@frs.sourceforge.net
 }
 
 #setup
@@ -119,7 +126,8 @@ regenerate() {
 
 gen_cl() {
     git clone git@github.com:silont-project/official-devices.git $OFFDEVICE
-    cd $KERNEL_DIR && git log --since=1.weeks --oneline | tee $CLFILE
+    cd $KERNEL_DIR && git fetch --unshallow
+    git log --since=1.weeks --oneline | tee $CLFILE
     cd $OFFDEVICE
     git add .
     git commit -m "surya: Automated Weekly Build"
@@ -188,7 +196,9 @@ packingkernel() {
 #upload to sf
 upload_sf() {
     setup
+    setup_sf
     scp $ZIPNAME azrim@frs.sourceforge.net:/home/frs/p/silont-project/surya
+    setup_github
     gen_cl
     post
 }
