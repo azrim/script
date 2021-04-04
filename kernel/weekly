@@ -126,7 +126,7 @@ regenerate() {
 
 gen_cl() {
     git clone git@github.com:silont-project/official-devices.git $OFFDEVICE
-    cd $KERNEL_DIR && git fetch --unshallow && git checkout weekly
+    cd $KERNEL_DIR && git fetch --unshallow
     git log --since=2.weeks --oneline | tee $CLFILE
     cd $OFFDEVICE
     git add .
