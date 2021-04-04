@@ -204,7 +204,7 @@ upload_sf() {
 }
 
 post() {
-    curl https://raw.githubusercontent.com/silont-project/official-devices/master/post | sed 's/chatidplaceholder/$CHAT_ID/g' | sed 's/tgtokenplaceholder/${TELEGRAM_TOKEN}/g' > post && chmod +x post
+    curl https://raw.githubusercontent.com/silont-project/official-devices/master/post | sed 's/chatidplaceholder/"$CHAT_ID"/g' | sed 's/tgtokenplaceholder/"${TELEGRAM_TOKEN}"/g' > post && chmod +x post
     ./post -d surya -c weekly -f SiLonT-Surya-Weekly -g azrim_lab
 }
 
