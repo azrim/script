@@ -188,7 +188,7 @@ packingkernel() {
 #upload to sf
 upload_sf() {
     setup
-    scp $ZIPNAME azrim@frs.sourceforge.net:/home/frs/p/silont-project/surya
+    rsync -avP -e ssh $ZIPNAME azrim@frs.sourceforge.net:/home/frs/p/silont-project/surya
     gen_cl
     post
 }
