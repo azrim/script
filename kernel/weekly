@@ -35,8 +35,8 @@ ANYKERNEL_BRANCH="master"
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
-CLFILE="SiLonT-Surya-Weekly.txt"
 OFFDEVICE="$KERNEL_DIR/ofcd"
+CLFILE="${OFFDEVICE}/SiLonT-Surya-Weekly.txt"
 
 # Compiler
 mkdir -p "/mnt/workdir/silont-clang"
@@ -118,9 +118,9 @@ regenerate() {
 }
 
 gen_cl() {
-    git log --since=1.weeks --oneline > $CLFILE
     git clone git@github.com:silont-project/official-devices.git $OFFDEVICE
-    cp $CLFILE $OFFDEVICE/surya/$CLFILE
+    cd $KERNEL_DIR && git log --since=1.weeks --oneline > $CLFILE
+    cd $OFFDEVICE
     git add .
     git commit -m "surya: Automated Weekly Build"
     git push
