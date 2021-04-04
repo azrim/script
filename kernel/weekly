@@ -121,6 +121,8 @@ gen_cl() {
     git log --since=1.weeks --oneline > $CLFILE
     git clone git@github.com:silont-project/official-devices.git $OFFDEVICE
     cp $CLFILE $OFFDEVICE/surya/$CLFILE
+    git add .
+    git commit -m "surya: Automated Weekly Build"
     git push
 }
 
