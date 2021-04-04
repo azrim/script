@@ -20,6 +20,7 @@ setup() {
     chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
+    ssh -T git@github.com -o StrictHostKeyChecking=no
     git config --global user.mail "mirzaspc@gmail.com"
     git config --global user.name "azrim"
 }
