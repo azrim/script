@@ -43,7 +43,7 @@ PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 OFFDEVICE="$KERNEL_DIR/ofcd"
-CLFILE="${OFFDEVICE}/SiLonT-Surya-Weekly.txt"
+CLFILE="${OFFDEVICE}/surya/SiLonT-Surya-Weekly.txt"
 
 # Compiler
 mkdir -p "/mnt/workdir/silont-clang"
