@@ -25,7 +25,7 @@ setup() {
     git config --global user.name "azrim"
 }
 
-setup
+#setup
 
 # Repo URL
 ANYKERNEL_REPO="https://github.com/azrim/anykernel3.git"
@@ -137,6 +137,7 @@ build_failed() {
 
 # Building
 makekernel() {
+    setup
     export PATH="${COMP_PATH}"
     make O=out ARCH=arm64 ${DEFCONFIG}
     if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
