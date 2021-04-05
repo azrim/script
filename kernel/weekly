@@ -20,11 +20,11 @@ setup() {
     chmod 400 $SSHSTORE
     eval "$(ssh-agent -s)"
     ssh-add $SSHSTORE
-    git config --global user.mail "mirzaspc@gmail.com"
-    git config --global user.name "azrim"
 }
 
 setup_github() {
+    git config --global user.mail "mirzaspc@gmail.com"
+    git config --global user.name "Hiitagiii"
     ssh -o StrictHostKeyChecking=no git@github.com
 }
 
@@ -75,6 +75,7 @@ REGENERATE_DEFCONFIG="" # unset if don't want to regenerate defconfig
 
 # Telegram
 CHATID="-1001414596945" # Group/channel chatid (use rose/userbot to get it)
+CHATIDN="-1001362559368"
 TELEGRAM_TOKEN="${TG_TOKEN}"
 
 # Export Telegram.sh
@@ -85,7 +86,7 @@ fi
 
 TELEGRAM="${TELEGRAM_FOLDER}"/telegram
 tg_cast() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
+    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATIDN}" -H \
     "$(
 		for POST in "${@}"; do
 			echo "${POST}"
@@ -127,7 +128,7 @@ regenerate() {
 gen_cl() {
     git clone git@github.com:silont-project/official-devices.git $OFFDEVICE
     cd $KERNEL_DIR && git fetch --unshallow
-    git log --since=2.weeks --oneline | tee $CLFILE
+    git log --since=1.weeks --oneline | tee $CLFILE
     cd $OFFDEVICE
     git add .
     git commit -m "surya: Automated Weekly Build"
