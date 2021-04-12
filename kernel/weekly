@@ -24,7 +24,7 @@ setup() {
 
 setup_github() {
     git config --global user.mail "mirzaspc@gmail.com"
-    git config --global user.name "Hiitagiii"
+    git config --global user.name "azrim"
     ssh -o StrictHostKeyChecking=no git@github.com
 }
 
