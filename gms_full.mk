@@ -6,6 +6,7 @@ PRODUCT_PACKAGES += \
     DevicePolicyPrebuilt \
     GoogleContacts \
     GoogleContactsSyncAdapter \
+    GoogleDialer \
     GoogleTTS \
     LatinIMEGooglePrebuilt \
     LocationHistoryPrebuilt \
