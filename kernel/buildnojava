@@ -151,8 +151,8 @@ packingkernel() {
 
     # Sign the zip before sending it to Telegram
     #git clone https://gitlab.com/azrim/openjdk-mirror.git ${JAVA_DIR}
-    curl -sLo zipsigner-3.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel2/master/zipsigner-3.0.jar
-    java -jar zipsigner-3.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
+    curl -sLo zipsigner-4.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel3/master/zipsigner-4.0.jar
+    java -jar zipsigner-4.0.jar "${TEMPZIPNAME}" "${ZIPNAME}"
 
     END=$(date +"%s")
     DIFF=$(( END - START ))
