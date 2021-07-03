@@ -76,6 +76,7 @@ tg_ship() {
                         echo "${POST}"
                 done
     )"
+}
 tg_fail() {
     "${TELEGRAM}" -f "${LOGS}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
     "$(
