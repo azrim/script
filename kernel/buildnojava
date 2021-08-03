@@ -108,7 +108,7 @@ build_failed() {
 	    END=$(date +"%s")
 	    DIFF=$(( END - START ))
 	    echo -e "Kernel compilation failed, See buildlog to fix errors"
-	    tg_fail "<b>$COMMIT_POINT</b> Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!"
+	    tg_fail "<b>${CHEAD}</b> Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!"
 	    exit 1
 }
 
