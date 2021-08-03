@@ -11,7 +11,7 @@ DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
 KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
-LOGS="${HOME}"/logs.txt
+LOGS="${HOME}"/${CHEAD}.log
 
 # Repo URL
 ANYKERNEL_REPO="https://github.com/azrim/anykernel3.git"
@@ -108,7 +108,7 @@ build_failed() {
 	    END=$(date +"%s")
 	    DIFF=$(( END - START ))
 	    echo -e "Kernel compilation failed, See buildlog to fix errors"
-	    tg_fail "<b>${CHEAD}</b> Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!"
+	    tg_fail "Build for ${DEVICE} <b>failed</b> in $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)!"
 	    exit 1
 }
 
