@@ -12,14 +12,34 @@ fw_api="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wl
 qca_wifi_host_cmn="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn"
 audio="https://source.codeaurora.org/quic/la/platform/vendor/opensource/audio-kernel/"
 data="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/data-kernel/"
+wg="https://git.zx2c4.com/wireguard-linux-compat/"
+exfat="https://github.com/arter97/exfat-linux"
 
 merge() {
-    #just for initial merge
     git subtree add --prefix drivers/staging/qcacld-3.0 $qcacld $TAG
     git subtree add --prefix drivers/staging/fw-api $fw_api $TAG
     git subtree add --prefix drivers/staging/qca-wifi-host-cmn $qca_wifi_host_cmn $TAG
     git subtree add --prefix techpack/audio $audio $TAG
     git subtree add --prefix techpack/data $data $TAG
+    git subtree add --prefix fs/exfat $exfat master
+    git subtree add --prefix net/wireguard $wg master
 }
 
-merge
+update() {
+    git subtree pull --prefix drivers/staging/qcacld-3.0 $qcacld $TAG
+    git subtree pull --prefix drivers/staging/fw-api $fw_api $TAG
+    git subtree pull --prefix drivers/staging/qca-wifi-host-cmn $qca_wifi_host_cmn $TAG
+    git subtree pull --prefix techpack/audio $audio $TAG
+    git subtree pull --prefix techpack/data $data $TAG
+    git subtree pull --prefix fs/exfat $exfat master
+    git subtree pull --prefix net/wireguard $wg master
+}
+
+if [[ -d "$DIR/drivers/staging/qcacld-3.0" ]]
+then
+    update
+else
+    merge
+fi
+exit 0
+
