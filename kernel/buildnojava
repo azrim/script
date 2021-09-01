@@ -37,6 +37,7 @@ if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
     COMP_PATH="$CLANG_DIR/bin:${PATH}"
 else
+    CSTRING2=$("$GCC_DIR"/bin/aarch64-elf-gcc --version | head -n 1)
     COMP_PATH="${GCC_DIR}/bin:${GCC32_DIR}/bin:${PATH}"
 fi
 
@@ -175,7 +176,7 @@ packingkernel() {
 tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
         "Compiling with $(nproc --all) CPUs" \
 	"" \
-        "Compiler: <code>${CSTRING}</code>" \
+        "Compiler: <code>${CSTRING}${CSTRING2}</code>" \
 	"Device: ${DEVICE}" \
 	"Kernel: <code>${KERNEL}</code>" \
 	"Linux Version: <code>$(make kernelversion)</code>" \
