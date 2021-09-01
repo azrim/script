@@ -12,8 +12,10 @@ ANYKERNEL="${HOME}"/anykernel
 
 # Repo URL
 CLANG_REPO="https://github.com/kdrag0n/proton-clang"
-ANYKERNEL_REPO="https://github.com/azrim/kerneltemplate.git"
+ANYKERNEL_REPO="https://github.com/Chuck439/AnyKernel3.git"
 ANYKERNEL_BRANCH="master"
+git clone --depth=1 -b arm64/11 https://github.com/silont-project/aarch64-elf-gcc gcc64
+git clone --depth=1 -b arm/11 https://github.com/silont-project/arm-eabi-gcc gcc32
 
 # Repo info
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -21,10 +23,10 @@ PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
-COMP_TYPE="clang" # unset if want to use gcc as compiler
+COMP_TYPE="" # unset if want to use gcc as compiler
 CLANG_DIR="/prclang"
-GCC_DIR="" # Doesn't needed if use proton-clang
-GCC32_DIR="" # Doesn't needed if use proton-clang
+GCC_DIR="gcc32" # Doesn't needed if use proton-clang
+GCC32_DIR="gcc64" # Doesn't needed if use proton-clang
 
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
@@ -34,20 +36,20 @@ else
 fi
 
 # Defconfig
-DEFCONFIG="silont-perf_defconfig"
+DEFCONFIG="mi439-perf_defconfig"
 REGENERATE_DEFCONFIG="" # unset if don't want to regenerate defconfig
 
 # Costumize
 KERNEL="SiLonT"
-DEVICE="Ginkgo"
-KERNELTYPE="10"
+DEVICE="Mi439"
+KERNELTYPE="Sakura"
 KERNELNAME="${KERNEL}-${DEVICE}-${KERNELTYPE}-$(date +%y%m%d-%H%M)"
 TEMPZIPNAME="${KERNELNAME}-unsigned.zip"
 ZIPNAME="${KERNELNAME}.zip"
 
 # Telegram
-CHANNEL="-1001156668998"
-CHATID="-1001468720637" # Group/channel chatid (use rose/userbot to get it)
+CHANNEL="-1001429581761"
+CHATID="-1001462474283" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN=${BOT_API_TOKEN} # Get from botfather
 
 BANNER_LINK="https://github.com/silont-project/silont-project/raw/master/20200729_202836.jpg"
@@ -149,7 +151,6 @@ tg_pub "<b>$CIRCLE_BUILD_NUM CI Build Triggered</b>" \
 	"Branch: <code>${PARSE_BRANCH}</code>" \
 	"Commit point: <code>${COMMIT_POINT}</code>" \
 	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>"
-        "Build URL: ${CIRCLE_BUILD_URL}"
 START=$(date +"%s")
 makekernel
 packingkernel

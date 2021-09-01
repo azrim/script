@@ -14,7 +14,7 @@ ANYKERNEL="${HOME}"/anykernel
 LOGS="${HOME}"/${CHEAD}.log
 
 # Repo URL
-ANYKERNEL_REPO="https://github.com/azrim/anykernel3.git"
+ANYKERNEL_REPO="https://github.com/Chuck439/AnyKernel3.git"
 ANYKERNEL_BRANCH="master"
 
 # Repo info
@@ -24,14 +24,19 @@ COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 
 # Compiler
 mkdir -p "/mnt/workdir/silont-clang"
-COMP_TYPE="clang" # unset if want to use gcc as compiler
+mkdir -p "/mnt/workdir/gcc64"
+mkdir -p "/mnt/workdir/gcc32"
+
+COMP_TYPE="" # unset if want to use gcc as compiler
 CLANG_DIR="/mnt/workdir/silont-clang"
 CLANG_URL="https://github.com/silont-project/silont-clang/archive/20210117.tar.gz"
-GCC_DIR="" # Doesn't needed if use proton-clang
-GCC32_DIR="" # Doesn't needed if use proton-clang
+GCC_DIR="/mnt/workdir/gcc64" # Doesn't needed if use proton-clang
+GCC32_DIR="/mnt/workdir/gcc32" # Doesn't needed if use proton-clang
 CLANG_FILE="/mnt/workdir/clang.tar.gz"
 
 git clone https://github.com/silont-project/silont-clang --depth=1 --single-branch $CLANG_DIR -b master
+git clone https://github.com/silont-project/aarch64-elf-gcc --depth=1 --single-branch -b arm64/11 $GCC_DIR
+git clone https://github.com/silont-project/arm-eabi-gcc --depth=1 --single-branch -b arm/11 $GCC32_DIR
 
 if [[ "${COMP_TYPE}" =~ "clang" ]]; then
     CSTRING=$("$CLANG_DIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
@@ -42,11 +47,11 @@ else
 fi
 
 # Defconfig
-DEFCONFIG="surya_defconfig"
+DEFCONFIG="mi439-perf_defconfig"
 REGENERATE_DEFCONFIG="" # unset if don't want to regenerate defconfig
 
 # Telegram
-CHATID="-1001254060097" # Group/channel chatid (use rose/userbot to get it)
+CHATID="-1001429581761" # Group/channel chatid (use rose/userbot to get it)
 TELEGRAM_TOKEN="${TG_TOKEN}"
 
 # Export Telegram.sh
@@ -91,7 +96,7 @@ versioning() {
 # Costumize
 versioning
 KERNEL="[TEST]SiLonT"
-DEVICE="Surya"
+DEVICE="Mi439"
 KERNELTYPE="$CONFIG_LOCALVERSION"
 KERNELNAME="${KERNEL}-${DEVICE}-${KERNELTYPE}-$(date +%y%m%d-%H%M)"
 TEMPZIPNAME="${KERNELNAME}-unsigned.zip"
@@ -124,7 +129,10 @@ makekernel() {
     if [[ "${COMP_TYPE}" =~ "clang" ]]; then
         make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64 LLVM=1 2>&1 | tee $LOGS
     else
-      	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
+      	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-" \
+        AR=llvm-ar NM=llvm-nm LD=ld.lld STRIP=llvm-strip OBJCOPY=llvm-objcopy \
+        OBJDUMP=llvm-objdump OBJSIZE=llvm-size READELF=llvm-readelf HOSTAR=llvm-ar HOSTLD=ld.lld
+
     fi
     # Check If compilation is success
     packingkernel
@@ -169,7 +177,7 @@ packingkernel() {
             "<b>Commit Head:</b> ${CHEAD}" \
             "<b>Time elapsed:</b> $((DIFF / 60)):$((DIFF % 60))" \
             "" \
-            "Leave a comment below if encountered any bugs!"
+            "<b>Tell if encountered any bugs!</b>"
 }
 
 # Starting
