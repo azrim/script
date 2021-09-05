@@ -6,10 +6,9 @@
 # Init
 KERNEL_DIR="${PWD}"
 cd $KERNEL_DIR
-CHEAD="$(git rev-parse --short HEAD)"
 DTB_TYPE="" # define as "single" if want use single file
-KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb             # if use single file define as Image.gz-dtb instead
-KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img # and comment this variable
+KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb   # if use single file define as Image.gz-dtb instead
+KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img       # and comment this variable
 ANYKERNEL="${HOME}"/anykernel
 LOGS="${HOME}"/${CHEAD}.log
 
@@ -21,6 +20,9 @@ ANYKERNEL_BRANCH="master"
 PARSE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
+CHEAD="$(git rev-parse --short HEAD)"
+LATEST_COMMIT="[$COMMIT_POINT](https://github.com/silont-project/kernel_xiaomi_surya/commit/$CHEAD)"
+LOGS_URL="[Drone](https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER)
 
 # Compiler
 mkdir -p "/mnt/workdir/silont-clang"
@@ -55,13 +57,12 @@ if ! [ -d "${TELEGRAM_FOLDER}" ]; then
 fi
 
 TELEGRAM="${TELEGRAM_FOLDER}"/telegram
-tg_cast() {
-    "${TELEGRAM}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
-    "$(
+tg_info() {
+	curl -s -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage -d chat_id=$CHATID -d "parse_mode=MARKDOWN" -d text="$(
 		for POST in "${@}"; do
 			echo "${POST}"
 		done
-    )"
+	)" &> /dev/null
 }
 tg_ship() {
     "${TELEGRAM}" -f "${ZIPNAME}" -t "${TELEGRAM_TOKEN}" -c "${CHATID}" -H \
@@ -89,7 +90,7 @@ versioning() {
 
 # Costumize
 versioning
-KERNEL="[TEST]SiLonT"
+KERNEL="[TEST]-SiLonT"
 DEVICE="Surya"
 KERNELTYPE="$CONFIG_LOCALVERSION"
 KERNELNAME="${KERNEL}-${DEVICE}-${KERNELTYPE}-$(date +%y%m%d-%H%M)"
@@ -161,7 +162,7 @@ packingkernel() {
     DIFF=$(( END - START ))
 
     # Ship it to the CI channel
-    tg_ship "<b>-------- Build Succeed --------</b>" \
+    tg_ship "<b>-------- $DRONE_BUILD_NUMBER Build Succeed --------</b>" \
             "" \
             "<b>Device:</b> ${DEVICE}" \
             "<b>Version:</b> ${KERNELTYPE}" \
@@ -172,17 +173,19 @@ packingkernel() {
 }
 
 # Starting
-tg_cast "<b>$DRONE_BUILD_NUMBER CI Build Triggered</b>" \
-        "Compiling with $(nproc --all) CPUs" \
-	"" \
-        "Compiler: <code>${CSTRING}</code>" \
-	"Device: ${DEVICE}" \
-	"Kernel: <code>${KERNEL}</code>" \
-	"Linux Version: <code>$(make kernelversion)</code>" \
-	"Branch: <code>${DRONE_BRANCH}</code>" \
-	"Clocked at: <code>$(date +%Y%m%d-%H%M)</code>" \
-	"Latest commit: <code>${COMMIT_POINT}</code>" \
-	"Log: https://cloud.drone.io/silont-project/kernel_xiaomi_surya/$DRONE_BUILD_NUMBER"
-
+NOW=$(date)
 START=$(date +"%s")
+tg_cast "*$DRONE_BUILD_NUMBER CI Build Triggered*" \
+    "Compiling with *$(nproc --all)* CPUs" \
+	"-----------------------------------------" \
+    "Compiler: ${CSTRING}" \
+	"Device: ${DEVICE}" \
+	"Kernel: ${KERNEL} ${KERNELTYPE}" \
+	"Linux Version: $(make kernelversion)" \
+	"Branch: ${DRONE_BRANCH}" \
+	"Clocked at: ${NOW}" \
+	"Latest commit: ${LATEST_COMMIT}" \
+    "------------------------------------------" \
+	"Log: ${LOGS_URL}"
+
 makekernel
