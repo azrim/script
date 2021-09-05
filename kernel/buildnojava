@@ -5,7 +5,7 @@
 
 # Init
 KERNEL_DIR="${PWD}"
-cd $KERNEL_DIR
+cd "$KERNEL_DIR" || exit
 DTB_TYPE="" # define as "single" if want use single file
 KERN_IMG="${KERNEL_DIR}"/out/arch/arm64/boot/Image.gz-dtb   # if use single file define as Image.gz-dtb instead
 KERN_DTB="${KERNEL_DIR}"/out/arch/arm64/boot/dtbo.img       # and comment this variable
@@ -58,7 +58,7 @@ fi
 
 TELEGRAM="${TELEGRAM_FOLDER}"/telegram
 tg_cast() {
-	curl -s -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage -d chat_id=$CHATID -d "parse_mode=MARKDOWN" -d text="$(
+	curl -s -X POST https://api.telegram.org/bot"$TELEGRAM_TOKEN"/sendMessage -d chat_id="$CHATID" -d "parse_mode=MARKDOWN" -d text="$(
 		for POST in "${@}"; do
 			echo "${POST}"
 		done
@@ -115,14 +115,14 @@ build_failed() {
 
 # Building
 makekernel() {
-    echo "azrim@Hearthaka" > $KERNEL_DIR/.builderdata
+    echo "azrim@Hearthaka" > "$KERNEL_DIR"/.builderdata
     export PATH="${COMP_PATH}"
     make O=out ARCH=arm64 ${DEFCONFIG}
     if [[ "${REGENERATE_DEFCONFIG}" =~ "true" ]]; then
         regenerate
     fi
     if [[ "${COMP_TYPE}" =~ "clang" ]]; then
-        make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64 LLVM=1 2>&1 | tee $LOGS
+        make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64 LLVM=1 2>&1 | tee "$LOGS"
     else
       	make -j$(nproc --all) O=out ARCH=arm64 CROSS_COMPILE="${GCC_DIR}/bin/aarch64-elf-" CROSS_COMPILE_ARM32="${GCC32_DIR}/bin/arm-eabi-"
     fi
