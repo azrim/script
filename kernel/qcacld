@@ -7,12 +7,12 @@
 DIR=$PWD
 TAG=$1
 
-qcacld="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0"
-fw_api="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/fw-api"
-qca_wifi_host_cmn="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn"
-audio="https://source.codeaurora.org/quic/la/platform/vendor/opensource/audio-kernel/"
-data="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/data-kernel/"
-wg="https://git.zx2c4.com/wireguard-linux-compat/"
+qcacld="https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0"
+fw_api="https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/fw-api"
+qca_wifi_host_cmn="https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn"
+audio="https://git.codelinaro.org/clo/la/platform/vendor/opensource/audio-kernel"
+data="https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/data-kernel"
+wg="https://github.com/WireGuard/wireguard-linux-compat.git"
 exfat="https://github.com/arter97/exfat-linux"
 
 merge() {
